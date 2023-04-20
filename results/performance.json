@@ -1,0 +1,60 @@
+{
+  "overall": {
+    "precision": 0.7357902846943927,
+    "recall": 0.730659930533628,
+    "f1": 0.7289812416782345,
+    "num_samples": 3167.0
+  },
+  "class": {
+    "Company | Product News": {
+      "precision": 0.8290766208251473,
+      "recall": 0.6393939393939394,
+      "f1": 0.7219846022241232,
+      "num_samples": 660.0
+    },
+    "General News | Opinion": {
+      "precision": 0.6610169491525424,
+      "recall": 0.5492957746478874,
+      "f1": 0.6,
+      "num_samples": 284.0
+    },
+    "Macro": {
+      "precision": 0.7315634218289085,
+      "recall": 0.7402985074626866,
+      "f1": 0.7359050445103859,
+      "num_samples": 335.0
+    },
+    "Stock Commentary": {
+      "precision": 0.769041769041769,
+      "recall": 0.7884130982367759,
+      "f1": 0.7786069651741294,
+      "num_samples": 397.0
+    },
+    "Stock Movement": {
+      "precision": 0.6287425149700598,
+      "recall": 0.6862745098039216,
+      "f1": 0.65625,
+      "num_samples": 153.0
+    },
+    "other": {
+      "precision": 0.7090788601722995,
+      "recall": 0.7997010463378177,
+      "f1": 0.7516684229012995,
+      "num_samples": 1338.0
+    }
+  },
+  "slices": {
+    "news_market": {
+      "precision": 0.47368421052631576,
+      "recall": 0.47368421052631576,
+      "f1": 0.47368421052631576,
+      "num_samples": 19
+    },
+    "short_text": {
+      "precision": 0.6722846441947565,
+      "recall": 0.6722846441947565,
+      "f1": 0.6722846441947565,
+      "num_samples": 534
+    }
+  }
+}

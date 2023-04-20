@@ -13,6 +13,8 @@ Overall, text classification and sentiment analysis provide valuable tools for t
 ## Installation
 
 ```
+source .venv/bin/activate
+python3 -m pip install pip setuptools wheel
 python3 -m pip install -e .
 ```
 
@@ -34,5 +36,12 @@ Heavily inspired from:
     title        = {Designing Machine Learning Systems},
     publisher    = {O’Reilly},
     year         = {2022}
+}
+
+@book{mlops,
+    author       = {Noah Gift and Alfredo Deza},
+    title        = {Practical MLOps : Operationalizing Machine Learning Models},
+    publisher    = {O’Reilly},
+    year         = {2021}
 }
 ```
