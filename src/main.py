@@ -13,7 +13,7 @@ import joblib
 import matplotlib.pyplot as plt
 
 from config import config
-from src import utils, data, train
+from src import utils, data, train, predict
 
 
 warnings.filterwarnings("ignore")
@@ -66,11 +66,12 @@ def train_model(args_fp, experiment_name, run_name):
             joblib.dump(artifacts["vectorizer"], Path(dp, "vectorizer.pkl"))
             joblib.dump(artifacts["model"], Path(dp, "model.pkl"))
             utils.save_dict(artifacts["performance"], Path(dp, "performance.json"))
+            utils.save_dict(vars(artifacts["args"]), Path(dp, "args.json"), cls=NumpyEncoder)
             plt.imsave(Path(dp, "confusion.jpg"), artifacts["confusion"])
             mlflow.log_artifacts(dp)
 
     # Save results
-    open(Path(config.RESULT_DIR, "run_id.txt"), "w").write(run_id)
+    open(Path(config.CONFIG_DIR, "run_id.txt"), "w").write(run_id)
     utils.save_dict(performance, Path(config.RESULT_DIR, "performance.json"))
     plt.imsave(Path(config.RESULT_DIR, "confusion.jpg"), artifacts["confusion"])
 
@@ -103,3 +104,35 @@ def optimize(args_fp, study_name, num_trials):
     trials_df = trials_df.sort_values(["user_attrs_f1"], ascending=False)
     args = {**args.__dict__, **study.best_trial.params}
     utils.save_dict(d=args, filepath=args_fp, cls=NumpyEncoder)
+
+    print("Optimize ✅")
+
+def predict_tag(text, run_id=None):
+    """Predict tag for text."""
+    if not run_id:
+        run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
+    artifacts = load_artifacts(run_id=run_id)
+    prediction = predict.predict(texts=[text], artifacts=artifacts)
+    print(json.dumps(prediction, indent=2))
+    return prediction
+ 
+def load_artifacts(run_id):
+    """Load artifacts for a given run_id."""
+    # Locate specifics artifacts directory
+    experiment_id = mlflow.get_run(run_id=run_id).info.experiment_id
+    artifacts_dir = Path(config.MODEL_REGISTRY, experiment_id, run_id, "artifacts")
+
+    # Load objects from run
+    args = Namespace(**utils.load_dict(filepath=Path(artifacts_dir, "args.json")))
+    vectorizer = joblib.load(Path(artifacts_dir, "vectorizer.pkl"))
+    label_encoder = data.LabelEncoder.load(file_path=Path(artifacts_dir, "label_encoder.json"))
+    model = joblib.load(Path(artifacts_dir, "model.pkl"))
+    performance = utils.load_dict(filepath=Path(artifacts_dir, "performance.json"))
+
+    return {
+        "args": args,
+        "label_encoder": label_encoder,
+        "vectorizer": vectorizer,
+        "model": model,
+        "performance": performance
+    }
