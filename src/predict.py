@@ -1,12 +1,23 @@
 import numpy as np
+from typing import List, Dict
 
-def custom_predict(y_prob, threshold, index):
-    """Custom predict function that defaults to an index if conditions are not met."""
+def custom_predict(y_prob : np.ndarray, threshold : float, index : int) -> np.ndarray:
+    """
+    Custom predict function that defaults to an index if conditions are not met.
+    
+    Args : 
+        y_prob (np.ndarray): predicted probabilities
+        threshold (float): minimum softmax score to predict majority class
+        index (int): label index to use if custom conditions is not met.
+
+    Returns :
+        np.ndarray: predicted label indices.
+    """
     y_pred = [np.argmax(p) if max(p) > threshold else index for p in y_prob]
     return np.array(y_pred)
 
 
-def predict(texts, artifacts):
+def predict(texts : List[str], artifacts : Dict) -> List[Dict]:
     """Predict tags for given texts."""
     x = artifacts["vectorizer"].transform(texts)
     y_pred = custom_predict(

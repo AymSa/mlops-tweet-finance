@@ -16,6 +16,14 @@ Overall, text classification and sentiment analysis provide valuable tools for t
 source .venv/bin/activate
 python3 -m pip install pip setuptools wheel
 python3 -m pip install -e .
+python3 -m pip install -e ".[docs]" [Only for docs]
+```
+
+## Make Documentation 
+
+```
+python3 -m mkdocs new . (if not initialized)
+python3 -m mkdocs serve
 ```
 
 

@@ -7,12 +7,26 @@ import optuna
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import log_loss
+from argparse import Namespace
+from typing import Dict
 
 from src import data, utils, predict, evaluate
 
 
-def objective(args, trial):
-    """Objective function for optimization trials."""
+def objective(
+    args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial
+) -> float:
+    """
+    Objective function for optimization trials.
+
+    Args :
+
+        args (Namespace): arguments to use for training.
+        trial (optuna.trial._trial.Trial, optional): optimization trial.
+
+    Returns :
+        float: metric value to be used for optimization.
+    """
     # Parameters to tune
     args.analyzer = trial.suggest_categorical("analyzer", ["word", "char", "char_wb"])
     args.ngram_max_range = trial.suggest_int("ngram_max_range", 3, 10)
@@ -20,19 +34,34 @@ def objective(args, trial):
     args.power_t = trial.suggest_uniform("power_t", 0.1, 0.5)
 
     # Train & evaluate
-    artifacts = train(args=args, trial=trial)
+    artifacts = train(args=args, df=df, trial=trial)
 
     # Set additional attributes
-    performance = artifacts["performance"]
-    print(json.dumps(performance, indent=2))
-    trial.set_user_attr("precision", performance["precision"])
-    trial.set_user_attr("recall", performance["recall"])
-    trial.set_user_attr("f1", performance["f1"])
+    overall_performance = artifacts["performance"]["overall"]
+    print(json.dumps(overall_performance, indent=2))
+    trial.set_user_attr("precision", overall_performance["precision"])
+    trial.set_user_attr("recall", overall_performance["recall"])
+    trial.set_user_attr("f1", overall_performance["f1"])
 
-    return performance["f1"]
+    return overall_performance["f1"]
 
 
-def train(args, df, trial=None):
+def train(
+    args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial = None
+) -> Dict:
+    """
+    Train model on data.
+
+    Args :
+
+        args (Namespace): arguments to use for training.
+        df (pd.DataFrame): data for training
+        trial (optuna.trial._trial.Trial, optional): optimization trial. Defaults to None.
+
+    Returns :
+        Dict: artifacts from the run.
+    """
+
     # Setup
     utils.set_seeds()
     if args.shuffle:

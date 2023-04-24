@@ -11,16 +11,18 @@ from optuna.integration.mlflow import MLflowCallback
 import tempfile
 import joblib
 import matplotlib.pyplot as plt
+from typing import List, Dict
 
 from config import config
 from src import utils, data, train, predict
-
 
 warnings.filterwarnings("ignore")
 
 
 def elt_data():
-    """Extract, load and transform our data assets."""
+    """
+    Extract, load and transform our data assets.
+    """
     # Extract + Load
     tweets = pd.read_csv(config.TWEETS_PATH)
 
@@ -36,11 +38,26 @@ def elt_data():
     df = df[df.label.notnull()]  # drop rows w/ no tag
     df.to_csv(Path(config.DATA_DIR, "labeled_tweets.csv"), index=False)
 
-    print("ELT ✅")
+    config.logger.info("ELT ✅")
 
 
-def train_model(args_fp, experiment_name, run_name):
-    """Train a model given arguments."""
+def train_model(
+    args_fp: str = "config/args.json",
+    experiment_name: str = "baselines",
+    run_name: str = "logreg_sgd",
+) -> None:
+    """
+    Train a model given arguments.
+
+    Args :
+        args_fp (str) : location of args config file.
+        experiment_name (str): name of experiment.
+        run_name (str): name of specific run in experiment.
+
+    Returns :
+        None
+
+    """
     # Load labeled data
     df = pd.read_csv(Path(config.DATA_DIR, "labeled_tweets.csv"))
 
@@ -66,7 +83,9 @@ def train_model(args_fp, experiment_name, run_name):
             joblib.dump(artifacts["vectorizer"], Path(dp, "vectorizer.pkl"))
             joblib.dump(artifacts["model"], Path(dp, "model.pkl"))
             utils.save_dict(artifacts["performance"], Path(dp, "performance.json"))
-            utils.save_dict(vars(artifacts["args"]), Path(dp, "args.json"), cls=NumpyEncoder)
+            utils.save_dict(
+                vars(artifacts["args"]), Path(dp, "args.json"), cls=NumpyEncoder
+            )
             plt.imsave(Path(dp, "confusion.jpg"), artifacts["confusion"])
             mlflow.log_artifacts(dp)
 
@@ -75,12 +94,26 @@ def train_model(args_fp, experiment_name, run_name):
     utils.save_dict(performance, Path(config.RESULT_DIR, "performance.json"))
     plt.imsave(Path(config.RESULT_DIR, "confusion.jpg"), artifacts["confusion"])
 
-    print(json.dumps(performance, indent=2))
-    print("Training ✅")
+    config.logger.info(json.dumps(performance, indent=2))
+    config.logger.info("Training ✅")
 
 
-def optimize(args_fp, study_name, num_trials):
-    """Optimize hyperparameters."""
+def optimize(
+    args_fp: str = "config/args.json",
+    study_name: str = "optimization",
+    num_trials: int = 20,
+) -> None:
+    """
+    Optimize hyperparameters.
+
+    Args :
+        args_fp (str) : location of args config file.
+        study_name (str): name of optimization study.
+        num_trials (int): number of trials to run in study.
+
+    Returns :
+        None
+    """
     # Load labeled data
     df = pd.read_csv(Path(config.DATA_DIR, "labeled_tweets.csv"))
 
@@ -105,19 +138,42 @@ def optimize(args_fp, study_name, num_trials):
     args = {**args.__dict__, **study.best_trial.params}
     utils.save_dict(d=args, filepath=args_fp, cls=NumpyEncoder)
 
-    print("Optimize ✅")
+    config.logger.info(json.dumps(args, indent=2))
+    config.logger.info("Optimize ✅")
 
-def predict_tag(text, run_id=None):
-    """Predict tag for text."""
+
+def predict_tag(text: str, run_id: str = None) -> List[Dict]:
+    """
+    Predict tag for text.
+
+    Args :
+        text (str): Text to classify
+        run_id (str, optional) : run id to load artifacts for prediction. Defaults to None.
+
+    Returns :
+        List[Dict]: Text with associated predicted label
+    """
     if not run_id:
         run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
     artifacts = load_artifacts(run_id=run_id)
     prediction = predict.predict(texts=[text], artifacts=artifacts)
-    print(json.dumps(prediction, indent=2))
+
+    config.logger.info(json.dumps(prediction, indent=2))
+    config.logger.info("Predict ✅")
+
     return prediction
- 
-def load_artifacts(run_id):
-    """Load artifacts for a given run_id."""
+
+
+def load_artifacts(run_id: str) -> Dict:
+    """
+    Load artifacts for a given run_id.
+
+    Args:
+        run_id : run id to load artifacts for prediction.
+
+    Returns:
+        Dict: artifacts from the specified run.
+    """
     # Locate specifics artifacts directory
     experiment_id = mlflow.get_run(run_id=run_id).info.experiment_id
     artifacts_dir = Path(config.MODEL_REGISTRY, experiment_id, run_id, "artifacts")
@@ -125,14 +181,18 @@ def load_artifacts(run_id):
     # Load objects from run
     args = Namespace(**utils.load_dict(filepath=Path(artifacts_dir, "args.json")))
     vectorizer = joblib.load(Path(artifacts_dir, "vectorizer.pkl"))
-    label_encoder = data.LabelEncoder.load(file_path=Path(artifacts_dir, "label_encoder.json"))
+    label_encoder = data.LabelEncoder.load(
+        file_path=Path(artifacts_dir, "label_encoder.json")
+    )
     model = joblib.load(Path(artifacts_dir, "model.pkl"))
     performance = utils.load_dict(filepath=Path(artifacts_dir, "performance.json"))
+
+    config.logger.info("Load artificats ✅")
 
     return {
         "args": args,
         "label_encoder": label_encoder,
         "vectorizer": vectorizer,
         "model": model,
-        "performance": performance
+        "performance": performance,
     }

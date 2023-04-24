@@ -4,6 +4,8 @@ from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from snorkel.slicing import PandasSFApplier
 from snorkel.slicing import slicing_function
+from typing import Dict, List
+import pandas as pd
 
 
 @slicing_function()
@@ -20,8 +22,20 @@ def news_market(x):
     return news_tweet and president_tweet
 
 
-def get_slice_metrics(y_true, y_pred, slices):
-    """Generate metrics for slices of data."""
+def get_slice_metrics(
+    y_true: np.ndarray, y_pred: np.ndarray, slices: np.recarray
+) -> Dict:
+    """
+    Generate metrics for slices of data.
+
+    Args :
+        y_true (np.ndarray)  : true labels
+        y_pred (np.ndarray)  : predicted labels
+        slices (np.recarray) : generated slices.
+
+    Returns:
+        Dict: slice metrics.
+    """
     metrics = {}
     for slice_name in slices.dtype.names:
         mask = slices[slice_name].astype(bool)
@@ -38,8 +52,21 @@ def get_slice_metrics(y_true, y_pred, slices):
     return metrics
 
 
-def get_metrics(y_true, y_pred, classes, df=None):
-    """Performance metrics using ground truths and predictions."""
+def get_metrics(
+    y_true: np.ndarray, y_pred: np.ndarray, classes: List[int], df: pd.DataFrame = None
+) -> Dict:
+    """
+    Performance metrics using ground truths and predictions.
+
+    Args :
+        y_true (np.ndarray)         : true labels
+        y_pred (np.ndarray)         : predicted labels
+        classes (List[int])         : list of encoded classes labels.
+        df (pd.DataFrame, optional) : dataframe to generate slice metrics on. Defaults to None.
+
+    Returns:
+        Dict: performance metrics.
+    """
     # Performance
     metrics = {"overall": {}, "class": {}}
     y_true = np.array(y_true)
@@ -73,14 +100,25 @@ def get_metrics(y_true, y_pred, classes, df=None):
     return metrics
 
 
-def get_confusion(y_true, y_pred, classes):
-    """Confusion matrix using ground truths and predictions."""
+def get_confusion(y_true: np.ndarray, y_pred: np.ndarray, classes: List[int]) -> np.ndarray:
+    """
+    Confusion matrix using ground truths and predictions.
+    
+    Args :
+        y_true (np.ndarray)  : true labels
+        y_pred (np.ndarray)  : predicted labels
+        classes (List[int])  : list of decoded classes labels.
+    
+    Returns:
+        np.ndarray: confusion image.
+    """
     cm = confusion_matrix(y_true, y_pred, labels=classes)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=classes)
 
     disp.plot()
     plt.xticks(rotation=90)
     fig = disp.figure_
+    fig.tight_layout()
     fig.canvas.draw()
     image = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
     image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
