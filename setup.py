@@ -1,15 +1,14 @@
 from pathlib import Path
+
 from setuptools import find_namespace_packages, setup
 
 BASE_DIR = Path(__file__).parent
 with open(Path(BASE_DIR, "requirements.txt"), "r") as file:
     required_packages = [ln.strip() for ln in file.readlines()]
 
-docs_packages = [
-    "mkdocs==1.4.2",
-    "mkdocstrings==0.21.2",
-    "mkdocstrings-python==0.9.0"
-]
+docs_packages = ["mkdocs==1.4.2", "mkdocstrings==0.21.2", "mkdocstrings-python==0.9.0"]
+
+style_packages = ["black==23.3.0", "flake8==6.0.0", "isort==5.12.0"]
 
 setup(
     name="FinBirdAI",
@@ -19,8 +18,5 @@ setup(
     python_requires=">=3.10",
     packages=find_namespace_packages(),
     install_requires=[required_packages],
-    extra_requires = {
-            "dev" : docs_packages,
-            "docs" : docs_packages
-    }
+    extra_requires={"dev": docs_packages + style_packages, "docs": docs_packages},
 )

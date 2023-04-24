@@ -1,21 +1,20 @@
-from imblearn.over_sampling import RandomOverSampler
 import json
-import numpy as np
-import pandas as pd
-import mlflow
-import optuna
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import SGDClassifier
-from sklearn.metrics import log_loss
 from argparse import Namespace
 from typing import Dict
 
-from src import data, utils, predict, evaluate
+import mlflow
+import numpy as np
+import optuna
+import pandas as pd
+from imblearn.over_sampling import RandomOverSampler
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import SGDClassifier
+from sklearn.metrics import log_loss
+
+from src import data, evaluate, predict, utils
 
 
-def objective(
-    args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial
-) -> float:
+def objective(args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial) -> float:
     """
     Objective function for optimization trials.
 
@@ -46,9 +45,7 @@ def objective(
     return overall_performance["f1"]
 
 
-def train(
-    args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial = None
-) -> Dict:
+def train(args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial = None) -> Dict:
     """
     Train model on data.
 
@@ -111,9 +108,7 @@ def train(
             )
         # Log
         if not trial:
-            mlflow.log_metrics(
-                {"train_loss": train_loss, "val_loss": val_loss}, step=epoch
-            )
+            mlflow.log_metrics({"train_loss": train_loss, "val_loss": val_loss}, step=epoch)
 
         # Pruning
         if trial:
@@ -124,16 +119,12 @@ def train(
     # Threshold
     y_pred = model.predict(X_val)
     y_prob = model.predict_proba(X_val)
-    args.threshold = np.quantile(
-        [y_prob[i][j] for i, j in enumerate(y_pred)], q=0.25
-    )  # Q1
+    args.threshold = np.quantile([y_prob[i][j] for i, j in enumerate(y_pred)], q=0.25)  # Q1
 
     # Evaluate
     other_index = label_encoder.tag_to_idx["other"]
     y_prob = model.predict_proba(X_test)
-    y_pred = predict.custom_predict(
-        y_prob=y_prob, threshold=args.threshold, index=other_index
-    )
+    y_pred = predict.custom_predict(y_prob=y_prob, threshold=args.threshold, index=other_index)
 
     performance = evaluate.get_metrics(
         y_true=y_test, y_pred=y_pred, classes=label_encoder.tags, df=test_df

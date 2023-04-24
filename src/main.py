@@ -1,20 +1,21 @@
-import pandas as pd
-from pathlib import Path
-import warnings
-import shutil
-from argparse import Namespace
 import json
-import mlflow
-from numpyencoder import NumpyEncoder
-import optuna
-from optuna.integration.mlflow import MLflowCallback
+import shutil
 import tempfile
+import warnings
+from argparse import Namespace
+from pathlib import Path
+from typing import Dict, List
+
 import joblib
 import matplotlib.pyplot as plt
-from typing import List, Dict
+import mlflow
+import optuna
+import pandas as pd
+from numpyencoder import NumpyEncoder
+from optuna.integration.mlflow import MLflowCallback
 
 from config import config
-from src import utils, data, train, predict
+from src import data, predict, train, utils
 
 warnings.filterwarnings("ignore")
 
@@ -83,9 +84,7 @@ def train_model(
             joblib.dump(artifacts["vectorizer"], Path(dp, "vectorizer.pkl"))
             joblib.dump(artifacts["model"], Path(dp, "model.pkl"))
             utils.save_dict(artifacts["performance"], Path(dp, "performance.json"))
-            utils.save_dict(
-                vars(artifacts["args"]), Path(dp, "args.json"), cls=NumpyEncoder
-            )
+            utils.save_dict(vars(artifacts["args"]), Path(dp, "args.json"), cls=NumpyEncoder)
             plt.imsave(Path(dp, "confusion.jpg"), artifacts["confusion"])
             mlflow.log_artifacts(dp)
 
@@ -120,12 +119,8 @@ def optimize(
     # Optimize
     args = Namespace(**utils.load_dict(filepath=args_fp))
     pruner = optuna.pruners.MedianPruner(n_startup_trials=5, n_warmup_steps=5)
-    study = optuna.create_study(
-        study_name=study_name, direction="maximize", pruner=pruner
-    )
-    mlflow_callback = MLflowCallback(
-        tracking_uri=mlflow.get_tracking_uri(), metric_name="f1"
-    )
+    study = optuna.create_study(study_name=study_name, direction="maximize", pruner=pruner)
+    mlflow_callback = MLflowCallback(tracking_uri=mlflow.get_tracking_uri(), metric_name="f1")
     study.optimize(
         lambda trial: train.objective(args, df, trial),
         n_trials=num_trials,
@@ -181,9 +176,7 @@ def load_artifacts(run_id: str) -> Dict:
     # Load objects from run
     args = Namespace(**utils.load_dict(filepath=Path(artifacts_dir, "args.json")))
     vectorizer = joblib.load(Path(artifacts_dir, "vectorizer.pkl"))
-    label_encoder = data.LabelEncoder.load(
-        file_path=Path(artifacts_dir, "label_encoder.json")
-    )
+    label_encoder = data.LabelEncoder.load(file_path=Path(artifacts_dir, "label_encoder.json"))
     model = joblib.load(Path(artifacts_dir, "model.pkl"))
     performance = utils.load_dict(filepath=Path(artifacts_dir, "performance.json"))
 

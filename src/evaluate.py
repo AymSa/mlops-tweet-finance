@@ -1,11 +1,14 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.metrics import precision_recall_fscore_support
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-from snorkel.slicing import PandasSFApplier
-from snorkel.slicing import slicing_function
 from typing import Dict, List
+
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+from sklearn.metrics import (
+    ConfusionMatrixDisplay,
+    confusion_matrix,
+    precision_recall_fscore_support,
+)
+from snorkel.slicing import PandasSFApplier, slicing_function
 
 
 @slicing_function()
@@ -22,9 +25,7 @@ def news_market(x):
     return news_tweet and president_tweet
 
 
-def get_slice_metrics(
-    y_true: np.ndarray, y_pred: np.ndarray, slices: np.recarray
-) -> Dict:
+def get_slice_metrics(y_true: np.ndarray, y_pred: np.ndarray, slices: np.recarray) -> Dict:
     """
     Generate metrics for slices of data.
 
@@ -72,9 +73,7 @@ def get_metrics(
     y_true = np.array(y_true)
 
     # Overall metrics
-    overall_metrics = precision_recall_fscore_support(
-        y_true, y_pred, average="weighted"
-    )
+    overall_metrics = precision_recall_fscore_support(y_true, y_pred, average="weighted")
     metrics["overall"]["precision"] = overall_metrics[0]
     metrics["overall"]["recall"] = overall_metrics[1]
     metrics["overall"]["f1"] = overall_metrics[2]
@@ -93,9 +92,7 @@ def get_metrics(
     # Slice metrics
     if df is not None:
         slices = PandasSFApplier([news_market, short_text]).apply(df)
-        metrics["slices"] = get_slice_metrics(
-            y_true=y_true, y_pred=y_pred, slices=slices
-        )
+        metrics["slices"] = get_slice_metrics(y_true=y_true, y_pred=y_pred, slices=slices)
 
     return metrics
 
@@ -103,12 +100,12 @@ def get_metrics(
 def get_confusion(y_true: np.ndarray, y_pred: np.ndarray, classes: List[int]) -> np.ndarray:
     """
     Confusion matrix using ground truths and predictions.
-    
+
     Args :
         y_true (np.ndarray)  : true labels
         y_pred (np.ndarray)  : predicted labels
         classes (List[int])  : list of decoded classes labels.
-    
+
     Returns:
         np.ndarray: confusion image.
     """

@@ -1,11 +1,12 @@
-from nltk.stem import PorterStemmer
-import re
-import numpy as np
 import json
-from sklearn.model_selection import train_test_split
+import re
 from collections import Counter
 from typing import Dict, List, Tuple
+
+import numpy as np
 import pandas as pd
+from nltk.stem import PorterStemmer
+from sklearn.model_selection import train_test_split
 
 from config import config
 
@@ -36,9 +37,7 @@ def idx_to_tag(serie, dict_tags):
     return serie.apply(lambda x: dict_tags[x])
 
 
-def preprocess(
-    df: pd.DataFrame, lower: bool, stem: bool, min_freq: int
-) -> pd.DataFrame:
+def preprocess(df: pd.DataFrame, lower: bool, stem: bool, min_freq: int) -> pd.DataFrame:
     """
     Preprocess the data.
 
@@ -100,9 +99,7 @@ def clean_text(
     # Stemming
     if stem:
         stemmer = PorterStemmer()
-        text = " ".join(
-            [stemmer.stem(word, to_lowercase=lower) for word in text.split(" ")]
-        )
+        text = " ".join([stemmer.stem(word, to_lowercase=lower) for word in text.split(" ")])
 
     return text
 
@@ -147,9 +144,7 @@ def replace_minority_labels(
     """
     tags = Counter(df[label_col].values)
     tags_above_freq = Counter(tag for tag in tags.elements() if (tags[tag] >= min_freq))
-    df[label_col] = df[label_col].apply(
-        lambda tag: tag if tag in tags_above_freq else min_label
-    )
+    df[label_col] = df[label_col].apply(lambda tag: tag if tag in tags_above_freq else min_label)
 
     return df
 

@@ -1,7 +1,8 @@
-import numpy as np
-import random
 import json
+import random
 from typing import Dict
+
+import numpy as np
 
 
 def set_seeds(seed: int = 42) -> None:

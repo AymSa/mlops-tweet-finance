@@ -1,10 +1,10 @@
-from pathlib import Path
-from nltk.corpus import stopwords
-import mlflow
-from rich.logging import RichHandler
 import logging
 import sys
+from pathlib import Path
 
+import mlflow
+from nltk.corpus import stopwords
+from rich.logging import RichHandler
 
 # Key directory locations
 BASE_DIR = Path(__file__).parent.parent.absolute()
@@ -40,7 +40,7 @@ ACCEPTED_TAGS = [
     "M&A | Investments",
 ]
 
-#Logging
+# Logging
 logging_config = {
     "version": 1,
     "disable_existing_loggers": False,
