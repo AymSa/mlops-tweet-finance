@@ -129,8 +129,7 @@ trial (optuna.trial._trial.Trial, optional): optimization trial.</p>
 </details>
       <details class="quote">
         <summary>Source code in <code>src/train.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span>
-<span class="normal">17</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
@@ -158,10 +157,7 @@ trial (optuna.trial._trial.Trial, optional): optimization trial.</p>
 <span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">objective</span><span class="p">(</span>
-    <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">Trial</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">Trial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Objective function for optimization trials.</span>
 
@@ -222,7 +218,8 @@ trial (optuna.trial._trial.Trial, optional): optimization trial. Defaults to Non
 </details>
       <details class="quote">
         <summary>Source code in <code>src/train.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 49</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 48</span>
+<span class="normal"> 49</span>
 <span class="normal"> 50</span>
 <span class="normal"> 51</span>
 <span class="normal"> 52</span>
@@ -319,18 +316,7 @@ trial (optuna.trial._trial.Trial, optional): optimization trial. Defaults to Non
 <span class="normal">143</span>
 <span class="normal">144</span>
 <span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span>
-    <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">Trial</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">Trial</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Train model on data.</span>
 
@@ -393,9 +379,7 @@ trial (optuna.trial._trial.Trial, optional): optimization trial. Defaults to Non
             <span class="p">)</span>
         <span class="c1"># Log</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">trial</span><span class="p">:</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span>
-                <span class="p">{</span><span class="s2">&quot;train_loss&quot;</span><span class="p">:</span> <span class="n">train_loss</span><span class="p">,</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">:</span> <span class="n">val_loss</span><span class="p">},</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span>
-            <span class="p">)</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">({</span><span class="s2">&quot;train_loss&quot;</span><span class="p">:</span> <span class="n">train_loss</span><span class="p">,</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">:</span> <span class="n">val_loss</span><span class="p">},</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
 
         <span class="c1"># Pruning</span>
         <span class="k">if</span> <span class="n">trial</span><span class="p">:</span>
@@ -406,16 +390,12 @@ trial (optuna.trial._trial.Trial, optional): optimization trial. Defaults to Non
     <span class="c1"># Threshold</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
     <span class="n">y_prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
-    <span class="n">args</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">y_prob</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)],</span> <span class="n">q</span><span class="o">=</span><span class="mf">0.25</span>
-    <span class="p">)</span>  <span class="c1"># Q1</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="n">y_prob</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)],</span> <span class="n">q</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>  <span class="c1"># Q1</span>
 
     <span class="c1"># Evaluate</span>
     <span class="n">other_index</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">tag_to_idx</span><span class="p">[</span><span class="s2">&quot;other&quot;</span><span class="p">]</span>
     <span class="n">y_prob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">predict</span><span class="o">.</span><span class="n">custom_predict</span><span class="p">(</span>
-        <span class="n">y_prob</span><span class="o">=</span><span class="n">y_prob</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">other_index</span>
-    <span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">predict</span><span class="o">.</span><span class="n">custom_predict</span><span class="p">(</span><span class="n">y_prob</span><span class="o">=</span><span class="n">y_prob</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">other_index</span><span class="p">)</span>
 
     <span class="n">performance</span> <span class="o">=</span> <span class="n">evaluate</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">(</span>
         <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">label_encoder</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">test_df</span>

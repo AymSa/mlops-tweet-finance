@@ -1,4 +1,5 @@
 cleanlab==2.3.1
+fastapi==0.95.1
 imbalanced-learn==0.10.1
 jupyter==1.0.0
 lime==0.2.0.1
@@ -14,4 +15,5 @@ rich==13.3.4
 scikit-learn==1.2.2
 seaborn==0.12.2
 snorkel==0.9.9
+uvicorn==0.21.1
 wordcloud==1.8.2.2

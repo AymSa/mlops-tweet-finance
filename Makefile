@@ -35,4 +35,27 @@ clean: style
 	find . | grep -E ".trash" | xargs rm -rf
 	rm -f .coverage
 
+# Docs
+.PHONY: doc
+doc : style
+	python3 -m mkdocs gh-deploy
 
+# MLflow experiments 
+MLFLOW_DIR := "notebooks/experiments"
+.PHONY: mlflow
+mlflow:
+	mlflow server -h 0.0.0.0 -p 5000 --backend-store-uri ${MLFLOW_DIR}
+
+
+.PHONY: rest-prod
+rest-prod:
+	gunicorn -c app/gunicorn.py -k uvicorn.workers.UvicornWorker app.api:app
+
+.PHONY: rest-dev
+rest-dev:
+	uvicorn app.api:app \
+	--host 0.0.0.0 \
+	--port 8000 \
+	--reload \
+	--reload-dir src \
+	--reload-dir app
