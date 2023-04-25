@@ -44,6 +44,8 @@ Enable parallelism and can deal with meaningful traffic.
 make rest-prod
 ```
 
+You can get the documentation of the REST API at ```http://0.0.0.0:8000/docs```
+
 <hr>
 <!-- Citation -->
 Heavily inspired from:

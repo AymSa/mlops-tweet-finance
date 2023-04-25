@@ -1,6 +1,7 @@
 ## Documentation
 
 - [Workflows](src/main.md): main workflows.
+- [REST API](app/api.md): api rest.
 - [src](src/data.md): documentation of functionality.
 
 ## MLOps - Tweet Classification for financial application

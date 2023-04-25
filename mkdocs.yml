@@ -10,6 +10,8 @@ nav:
     - predict: src/predict.md
     - train: src/train.md
     - utils: src/utils.md
+  - rest api:
+    - api: app/api.md
 theme: readthedocs
 plugins:
   - mkdocstrings
