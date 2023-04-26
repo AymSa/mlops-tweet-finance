@@ -21,8 +21,8 @@ def short_text(x):
 def news_market(x):
     "General News | Opinion tweets about market." ""
     news_tweet = "General News | Opinion" in x.label
-    president_tweet = "market" in x.text
-    return news_tweet and president_tweet
+    market_tweet = "market" in x.text
+    return news_tweet and market_tweet
 
 
 def get_slice_metrics(y_true: np.ndarray, y_pred: np.ndarray, slices: np.recarray) -> Dict:
@@ -41,7 +41,7 @@ def get_slice_metrics(y_true: np.ndarray, y_pred: np.ndarray, slices: np.recarra
     for slice_name in slices.dtype.names:
         mask = slices[slice_name].astype(bool)
 
-        if sum(mask):
+        if sum(mask): #At least a true value
             slice_metrics = precision_recall_fscore_support(
                 y_true[mask], y_pred[mask], average="micro"
             )

@@ -46,6 +46,7 @@ def train_model(
     args_fp: str = "config/args.json",
     experiment_name: str = "baselines",
     run_name: str = "logreg_sgd",
+    test_run: bool = False,
 ) -> None:
     """
     Train a model given arguments.
@@ -54,10 +55,7 @@ def train_model(
         args_fp (str) : location of args config file.
         experiment_name (str): name of experiment.
         run_name (str): name of specific run in experiment.
-
-    Returns :
-        None
-
+        test_run (bool, optional): If True, artifacts will not be saved. Defaults to False.
     """
     # Load labeled data
     df = pd.read_csv(Path(config.DATA_DIR, "labeled_tweets.csv"))
@@ -89,9 +87,10 @@ def train_model(
             mlflow.log_artifacts(dp)
 
     # Save results
-    open(Path(config.CONFIG_DIR, "run_id.txt"), "w").write(run_id)
-    utils.save_dict(performance, Path(config.RESULT_DIR, "performance.json"))
-    plt.imsave(Path(config.RESULT_DIR, "confusion.jpg"), artifacts["confusion"])
+    if not test_run: # pragma: no cover, actual run
+        open(Path(config.CONFIG_DIR, "run_id.txt"), "w").write(run_id)
+        utils.save_dict(performance, Path(config.RESULT_DIR, "performance.json"))
+        plt.imsave(Path(config.RESULT_DIR, "confusion.jpg"), artifacts["confusion"])
 
     config.logger.info(json.dumps(performance, indent=2))
     config.logger.info("Training ✅")

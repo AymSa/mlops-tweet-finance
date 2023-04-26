@@ -10,6 +10,8 @@ docs_packages = ["mkdocs==1.4.2", "mkdocstrings==0.21.2", "mkdocstrings-python==
 
 style_packages = ["black==23.3.0", "flake8==6.0.0", "isort==5.12.0"]
 
+test_packages = ["pytest==7.3.1", "pytest-cov==4.0.0"]
+
 setup(
     name="FinBirdAI",
     version=0.1,
@@ -18,5 +20,9 @@ setup(
     python_requires=">=3.10",
     packages=find_namespace_packages(),
     install_requires=[required_packages],
-    extra_requires={"dev": docs_packages + style_packages, "docs": docs_packages},
+    extra_requires={
+        "dev": docs_packages + style_packages + test_packages,
+        "docs": docs_packages,
+        "test": test_packages,
+    },
 )
