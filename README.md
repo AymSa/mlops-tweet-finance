@@ -30,13 +30,13 @@ make mlflow
 
 ## Serving REST API 
 
-## Dev
+### Dev
 
 ```
 make rest-dev
 ```
 
-## Prod 
+### Prod 
 
 Enable parallelism and can deal with meaningful traffic. 
 
@@ -46,6 +46,57 @@ make rest-prod
 
 You can get the documentation of the REST API at ```http://0.0.0.0:8000/docs```
 
+
+## Testing 
+
+### Code
+
+We will use pytest to test ours functions, even those that interact with our data and models !!!
+
+```
+python -m pytest -m 'not training'
+python -m pytest -m 'training'
+```
+
+### Data
+
+We use the **great expectations** library to create expectations as to what our data should look like in a standardized way for data validity.
+
+**All the following commands need to be done in the tests folder !!!**
+
+To setup the folder for data test we run the command ```great_expectations init```.
+
+The first step is then to establish our datasource which tells Great Expectations where our data lives with the command ```great_expectations datasource new```
+
+Create expectations manually, interactively or automatically and save them as suites (a set of expectations for a particular data asset).
+
+```great_expectations suite new```
+
+For now only supports tsv, csv, and parquet file extensions. 
+
+Create Checkpoints where a Suite of Expectations are applied to a specific data asset.
+
+```great_expectations checkpoint new <CHECKPOINT_NAME>```
+
+
+```great_expectations checkpoint run <CHECKPOINT_NAME>```
+
+Great Expectations automatically generates documentation for our tests. It also stores information about validation runs and their results. 
+
+```great_expectations docs build```
+
+Note : The advantage of using a library such as great expectations in production is that we can :
+
+- reduce redundant efforts for creating tests across data modalities
+
+- automatically create testing checkpoints to execute as our dataset grows
+
+- automatically generate documentation on expectations and report on runs
+
+- easily connect with backend data sources
+
+We will try these features later.
+##
 <hr>
 <!-- Citation -->
 Heavily inspired from:

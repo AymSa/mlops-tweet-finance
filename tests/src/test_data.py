@@ -92,10 +92,12 @@ def test_replace_minority_labels(df: pd.DataFrame, min_freq: int, unique_labels:
 )
 def test_clean_text(text, lower, stem, stopwords, cleaned_text):
     assert data.clean_text(text, lower, stem, stopwords) == cleaned_text
- 
+
+
 @pytest.fixture(scope="function")
 def label_encoder():
     return data.LabelEncoder()
+
 
 class TestLabelEncoder:
     def test_empty_init(self, label_encoder):
@@ -114,9 +116,10 @@ class TestLabelEncoder:
             label_encoder.save(file_path=fp)
             label_encoder = label_encoder.load(file_path=fp)
             assert len(label_encoder.tags) == 0
-    #TODO : FIX BUG WITH GLOBAL TEST
-    #TEMPORARY FIX : RUN Training tests separately from others
-    def test_fit(self, label_encoder):  
+
+    # TODO : FIX BUG WITH GLOBAL TEST
+    # TEMPORARY FIX : RUN Training tests separately from others
+    def test_fit(self, label_encoder):
         label_encoder.fit(["apple", "apple", "banana"])
         assert "apple" in label_encoder.tag_to_idx.keys()
         assert "banana" in label_encoder.tag_to_idx.keys()
@@ -137,8 +140,9 @@ class TestLabelEncoder:
         assert np.array_equal(label_encoder.encode(y_decoded), np.array(y_encoded))
         assert label_encoder.decode(y_encoded) == y_decoded
 
-#TODO : FIX BUG WITH GLOBAL TEST
-#TEMPORARY FIX : RUN Training tests separately from others
+
+# TODO : FIX BUG WITH GLOBAL TEST
+# TEMPORARY FIX : RUN Training tests separately from others
 @pytest.mark.parametrize("train_size", [(0.7), (0.8), (0.65)])
 def test_get_data_splits(df: pd.DataFrame, train_size: float):
     df = df.sample(frac=1).reset_index(drop=True)
@@ -153,5 +157,3 @@ def test_get_data_splits(df: pd.DataFrame, train_size: float):
     assert len(X_train) / float(len(df)) == pytest.approx(train_size, abs=0.05)  # x ± 0.05
     assert len(X_val) / float(len(df)) == pytest.approx((1 - train_size) / 2.0, abs=0.05)
     assert len(X_test) / float(len(df)) == pytest.approx((1 - train_size) / 2.0, abs=0.05)
-
-    

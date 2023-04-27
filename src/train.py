@@ -66,7 +66,7 @@ def train(args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial = 
     df = df[: args.subset]  # None = all samples
     df = data.preprocess(df, lower=args.lower, stem=args.stem, min_freq=args.min_freq)
     label_encoder = data.LabelEncoder().fit(df.label)
-    
+
     X_train, X_val, X_test, y_train, y_val, y_test = data.get_data_splits(
         X=df.text.to_numpy(), y=label_encoder.encode(df.label)
     )
@@ -112,7 +112,7 @@ def train(args: Namespace, df: pd.DataFrame, trial: optuna.trial._trial.Trial = 
             mlflow.log_metrics({"train_loss": train_loss, "val_loss": val_loss}, step=epoch)
 
         # Pruning
-        if trial: # pragma: no cover, optuna pruning
+        if trial:  # pragma: no cover, optuna pruning
             trial.report(val_loss, epoch)
             if trial.should_prune():
                 raise optuna.TrialPruned()

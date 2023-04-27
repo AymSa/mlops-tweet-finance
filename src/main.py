@@ -32,7 +32,7 @@ def elt_data():
     shutil.copyfile(config.TAGS_PATH, Path(config.DATA_DIR, "tags.txt"))
 
     # Transform
-    df = tweets
+    df = tweets.copy()
     dict_tags = data.get_idx_tag(Path(config.DATA_DIR, "tags.txt"))
     df.label = data.idx_to_tag(df.label, dict_tags)
 
@@ -87,7 +87,7 @@ def train_model(
             mlflow.log_artifacts(dp)
 
     # Save results
-    if not test_run: # pragma: no cover, actual run
+    if not test_run:  # pragma: no cover, actual run
         open(Path(config.CONFIG_DIR, "run_id.txt"), "w").write(run_id)
         utils.save_dict(performance, Path(config.RESULT_DIR, "performance.json"))
         plt.imsave(Path(config.RESULT_DIR, "confusion.jpg"), artifacts["confusion"])
