@@ -41,7 +41,7 @@ def get_slice_metrics(y_true: np.ndarray, y_pred: np.ndarray, slices: np.recarra
     for slice_name in slices.dtype.names:
         mask = slices[slice_name].astype(bool)
 
-        if sum(mask): #At least a true value
+        if sum(mask):  # At least a true value
             slice_metrics = precision_recall_fscore_support(
                 y_true[mask], y_pred[mask], average="micro"
             )

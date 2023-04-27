@@ -10,7 +10,12 @@ docs_packages = ["mkdocs==1.4.2", "mkdocstrings==0.21.2", "mkdocstrings-python==
 
 style_packages = ["black==23.3.0", "flake8==6.0.0", "isort==5.12.0"]
 
-test_packages = ["pytest==7.3.1", "pytest-cov==4.0.0"]
+test_packages = [
+    "pytest==7.3.1",
+    "pytest-cov==4.0.0",
+    "great-expectations==0.16.8",
+    "Send2Trash==1.8.2",
+]
 
 setup(
     name="FinBirdAI",

@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 import pytest
-from src import evaluate
 from snorkel.slicing import PandasSFApplier
+
+from src import evaluate
 
 
 @pytest.fixture(scope="function")
@@ -36,6 +37,7 @@ def test_get_slice_metrics(df: pd.DataFrame):
     assert metrics["news_market"]["recall"] == 1 / 1
     assert metrics["short_text"]["precision"] == 1 / 2
     assert metrics["short_text"]["recall"] == 1 / 2
+
 
 def test_get_metrics():
     y_true = np.array([0, 0, 1, 1])

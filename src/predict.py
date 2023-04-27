@@ -21,7 +21,7 @@ def custom_predict(y_prob: np.ndarray, threshold: float, index: int) -> np.ndarr
 
 def predict(texts: List[str], artifacts: Dict) -> List[Dict]:
     """Predict tags for given texts."""
-    #TODO : Add preprocess step 
+    # TODO : Add preprocess step
     x = artifacts["vectorizer"].transform(texts)
     y_pred = custom_predict(
         y_prob=artifacts["model"].predict_proba(x),

@@ -1,6 +1,8 @@
-import numpy as np
 import tempfile
 from pathlib import Path
+
+import numpy as np
+
 from src import utils
 
 
@@ -19,9 +21,8 @@ def test_set_seed():
 
 def test_save_load_dict():
     with tempfile.TemporaryDirectory() as dp:
-        d = {"key_0" : "val_0", 
-             "key_1" : "val_1"}
-        fp = Path(dp, 'd.json')
+        d = {"key_0": "val_0", "key_1": "val_1"}
+        fp = Path(dp, "d.json")
         utils.save_dict(d=d, filepath=fp)
         loaded_d = utils.load_dict(filepath=fp)
 

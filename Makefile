@@ -59,3 +59,8 @@ rest-dev:
 	--reload \
 	--reload-dir src \
 	--reload-dir app
+
+
+.PHONY : test
+test:
+	python -m pytest -m "not training"
