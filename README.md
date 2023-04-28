@@ -96,6 +96,20 @@ Note : The advantage of using a library such as great expectations in production
 - easily connect with backend data sources
 
 We will try these features later.
+
+### Model
+
+Behavioral testing is the process of  testing input data and expected outputs while treating the model as a black box.
+
+The main tests are : 
+
+- invariance test: Changes should not affect outputs.
+
+- directional test : Change should affect outputs.
+
+- minimum functionality test : Simple combination of inputs and expected outputs.
+
+To run all tests (expect training one) run the command : ```make test```
 ##
 <hr>
 <!-- Citation -->

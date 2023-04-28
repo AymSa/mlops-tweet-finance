@@ -1,5 +1,5 @@
 from typing import Dict, List
-
+from src import data
 import numpy as np
 
 
@@ -21,8 +21,8 @@ def custom_predict(y_prob: np.ndarray, threshold: float, index: int) -> np.ndarr
 
 def predict(texts: List[str], artifacts: Dict) -> List[Dict]:
     """Predict tags for given texts."""
-    # TODO : Add preprocess step
-    x = artifacts["vectorizer"].transform(texts)
+    cleaned_texts = [data.clean_text(text) for text in texts]
+    x = artifacts["vectorizer"].transform(cleaned_texts)
     y_pred = custom_predict(
         y_prob=artifacts["model"].predict_proba(x),
         threshold=artifacts["args"].threshold,
@@ -32,7 +32,8 @@ def predict(texts: List[str], artifacts: Dict) -> List[Dict]:
     predictions = [
         {
             "input_text": texts[i],
-            "predicted_tags": tags[i],
+            "process_text": cleaned_texts[i],
+            "predicted_tag": tags[i],
         }
         for i in range(len(tags))
     ]
