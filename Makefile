@@ -64,3 +64,6 @@ rest-dev:
 .PHONY : test
 test:
 	python -m pytest -m "not training"
+	cd tests
+	great_expectations checkpoint run tweets
+	great_expectations checkpoint run labeled_tweets
