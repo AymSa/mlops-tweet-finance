@@ -3,8 +3,11 @@ import sys
 from pathlib import Path
 
 import mlflow
+import nltk
 from nltk.corpus import stopwords
 from rich.logging import RichHandler
+
+nltk.download("stopwords")
 
 # Key directory locations
 BASE_DIR = Path(__file__).parent.parent.absolute()
