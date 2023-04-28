@@ -3,7 +3,7 @@ from pathlib import Path
 from setuptools import find_namespace_packages, setup
 
 BASE_DIR = Path(__file__).parent
-with open(Path(BASE_DIR, "requirements.txt"), "r") as file:
+with open(Path(BASE_DIR, "requirements.txt")) as file:
     required_packages = [ln.strip() for ln in file.readlines()]
 
 docs_packages = ["mkdocs==1.4.2", "mkdocstrings==0.21.2", "mkdocstrings-python==0.9.0"]
@@ -26,7 +26,7 @@ setup(
     packages=find_namespace_packages(),
     install_requires=[required_packages],
     extra_requires={
-        "dev": docs_packages + style_packages + test_packages,
+        "dev": docs_packages + style_packages + test_packages + ["pre-commit==3.2.2"],
         "docs": docs_packages,
         "test": test_packages,
     },

@@ -1,10 +1,12 @@
-import pytest
-from config import config
-from src import main, predict
 from pathlib import Path
 
+import pytest
+
+from config import config
+from src import main, predict
+
 """
-Behavioral testing is the process of 
+Behavioral testing is the process of
 testing input data and expected outputs
 while treating the model as a black box.
 
@@ -15,7 +17,7 @@ directional: Change should affect outputs.
 minimum functionality: Simple combination of inputs and expected outputs.
 
 
-Each of these types of tests can also include adversarial tests 
+Each of these types of tests can also include adversarial tests
 such as testing with common biased tokens or noisy tokens, etc.
 """
 

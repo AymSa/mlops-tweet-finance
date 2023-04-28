@@ -1,6 +1,8 @@
 from typing import Dict, List
-from src import data
+
 import numpy as np
+
+from src import data
 
 
 def custom_predict(y_prob: np.ndarray, threshold: float, index: int) -> np.ndarray:

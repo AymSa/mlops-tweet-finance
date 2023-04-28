@@ -9,20 +9,23 @@ help:
 	@echo "clean   : cleans all unnecessary files."
 
 # Environment
-.PHONY: venv
+.PHONY: env
 .ONESHELL:
-venv:
+env:
 	python3 -m venv .venv
-	source venv/bin/activate 
+	source venv/bin/activate
 	python3 -m pip install pip setuptools wheel
 	python3 -m pip install -e .
+	python3 -m pip install -e ".[dev]"
+	pre-commit install
+	pre-commit autoupdate
 
-# Styling 
+# Styling
 .PHONY: style
-style : 
+style :
 	black .
 	flake8
-	isort . 	
+	isort .
 
 # Cleaning
 .PHONY: clean
@@ -40,7 +43,7 @@ clean: style
 doc : style
 	python3 -m mkdocs gh-deploy
 
-# MLflow experiments 
+# MLflow experiments
 MLFLOW_DIR := "notebooks/experiments"
 .PHONY: mlflow
 mlflow:
