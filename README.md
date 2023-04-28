@@ -16,19 +16,19 @@ Overall, text classification and sentiment analysis provide valuable tools for t
 make venv
 ```
 
-## Serving Documentation 
+## Serving Documentation
 
 ```
 make doc
 ```
 
-## View MLflow experiments 
+## View MLflow experiments
 
 ```
 make mlflow
 ```
 
-## Serving REST API 
+## Serving REST API
 
 ### Dev
 
@@ -36,9 +36,9 @@ make mlflow
 make rest-dev
 ```
 
-### Prod 
+### Prod
 
-Enable parallelism and can deal with meaningful traffic. 
+Enable parallelism and can deal with meaningful traffic.
 
 ```
 make rest-prod
@@ -47,7 +47,7 @@ make rest-prod
 You can get the documentation of the REST API at ```http://0.0.0.0:8000/docs```
 
 
-## Testing 
+## Testing
 
 ### Code
 
@@ -72,7 +72,7 @@ Create expectations manually, interactively or automatically and save them as su
 
 ```great_expectations suite new```
 
-For now only supports tsv, csv, and parquet file extensions. 
+For now only supports tsv, csv, and parquet file extensions.
 
 Create Checkpoints where a Suite of Expectations are applied to a specific data asset.
 
@@ -81,7 +81,7 @@ Create Checkpoints where a Suite of Expectations are applied to a specific data 
 
 ```great_expectations checkpoint run <CHECKPOINT_NAME>```
 
-Great Expectations automatically generates documentation for our tests. It also stores information about validation runs and their results. 
+Great Expectations automatically generates documentation for our tests. It also stores information about validation runs and their results.
 
 ```great_expectations docs build```
 
@@ -101,7 +101,7 @@ We will try these features later.
 
 Behavioral testing is the process of  testing input data and expected outputs while treating the model as a black box.
 
-The main tests are : 
+The main tests are :
 
 - invariance test: Changes should not affect outputs.
 
@@ -110,7 +110,14 @@ The main tests are :
 - minimum functionality test : Simple combination of inputs and expected outputs.
 
 To run all tests (expect training one) run the command : ```make test```
-##
+
+
+## Data and Model Versioning
+
+
+
+In terms of versioning our model artifacts, we aren't pushing anything to our blob storage because our model registry already takes care of all that. Instead we expose the run ID, parameters and performance inside the config directory so we can easily view results and compare them with other local runs. For very large applications or in the case of multiple models in production, these artifacts would be stored in a metadata or evaluation store where they'll be indexed by model run IDs.
+
 <hr>
 <!-- Citation -->
 Heavily inspired from:

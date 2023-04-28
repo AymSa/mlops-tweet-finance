@@ -70,3 +70,8 @@ test:
 	cd tests
 	great_expectations checkpoint run tweets
 	great_expectations checkpoint run labeled_tweets
+
+.PHONY : dvc
+dvc:
+	dvc add data/tweets.csv data/labeled_tweets.csv data/tags.txt
+	dvc push

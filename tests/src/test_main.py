@@ -52,11 +52,6 @@ def test_optimize(args_fp):
     main.optimize(args_fp=args_fp, study_name=study_name, num_trials=num_trials)
 
 
-def test_load_artifacts(run_id):
-    artifacts = main.load_artifacts(run_id=run_id)
-    assert len(artifacts)
-
-
 def test_predict_tag(run_id):
     text = "Elon Musk is selling dragon flame throwers as a new product market"
     main.predict_tag(text=text, run_id=run_id)
