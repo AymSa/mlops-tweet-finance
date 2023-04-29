@@ -13,4 +13,5 @@ rich==13.3.4
 scikit-learn==1.2.2
 seaborn==0.12.2
 snorkel==0.9.9
+streamlit==1.22.0
 uvicorn==0.21.1
