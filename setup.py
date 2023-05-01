@@ -28,7 +28,7 @@ setup(
     python_requires=">=3.10",
     packages=find_namespace_packages(),
     install_requires=[required_packages],
-    extra_requires={
+    extras_require={
         "dev": docs_packages
         + style_packages
         + test_packages
