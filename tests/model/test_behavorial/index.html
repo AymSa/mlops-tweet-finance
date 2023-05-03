@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Test behavorial - Tweet Classification for financial application</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Test behavorial";
+        var mkdocs_page_input_path = "tests/model/test_behavorial.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Tweet Classification for financial application
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">workflows</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../src/main/">main</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">src</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../src/data/">data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../src/evaluate/">evaluate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../src/predict/">predict</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../src/train/">train</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../src/utils/">utils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">rest api</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../app/api/">api</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Tweet Classification for financial application</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Test behavorial</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/AymSa/mlops-tweet-finance/edit/master/docs/tests/model/test_behavorial.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+<a id="tests.model.test_behavioral"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="tests.model.test_behavioral.test_dir" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_dir</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">artifacts</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Directional expectations (changes with known outputs).</p>
+
+      <details class="quote">
+        <summary>Source code in <code>tests/model/test_behavioral.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
+    <span class="s2">&quot;text, tag&quot;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Real Estate market is on the decline.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Macro&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Market is on the uprise.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;other&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Electrical vehicle market is on the uprise.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Company | Product News&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_dir</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">artifacts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Directional expectations (changes with known outputs).&quot;&quot;&quot;</span>
+    <span class="n">predicted_tag</span> <span class="o">=</span> <span class="n">predict</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">texts</span><span class="o">=</span><span class="p">[</span><span class="n">text</span><span class="p">],</span> <span class="n">artifacts</span><span class="o">=</span><span class="n">artifacts</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;predicted_tag&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">tag</span> <span class="o">==</span> <span class="n">predicted_tag</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="tests.model.test_behavioral.test_inv" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_inv</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">artifacts</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>invariance via verb injection (changes should not affect outputs).</p>
+
+      <details class="quote">
+        <summary>Source code in <code>tests/model/test_behavioral.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
+    <span class="s2">&quot;text, tag&quot;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Real Estate market is on the decline.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Macro&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Real Estate market is on the uprise.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Macro&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Real Estate market isn&#39;t on the uprise.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Macro&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_inv</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">artifacts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;invariance via verb injection (changes should not affect outputs).&quot;&quot;&quot;</span>
+    <span class="n">predicted_tag</span> <span class="o">=</span> <span class="n">predict</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">texts</span><span class="o">=</span><span class="p">[</span><span class="n">text</span><span class="p">],</span> <span class="n">artifacts</span><span class="o">=</span><span class="n">artifacts</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;predicted_tag&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">tag</span> <span class="o">==</span> <span class="n">predicted_tag</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="tests.model.test_behavioral.test_mft" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">test_mft</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">artifacts</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Minimum Functionality Tests (simple input/output pairs).</p>
+
+      <details class="quote">
+        <summary>Source code in <code>tests/model/test_behavioral.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span>
+<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
+    <span class="s2">&quot;text, tag&quot;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Macro economy.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Macro&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Emerging markets stocks.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Stock Commentary&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;Dandelions is a sweet love song.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;other&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_mft</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">artifacts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Minimum Functionality Tests (simple input/output pairs).&quot;&quot;&quot;</span>
+    <span class="n">predicted_tag</span> <span class="o">=</span> <span class="n">predict</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">texts</span><span class="o">=</span><span class="p">[</span><span class="n">text</span><span class="p">],</span> <span class="n">artifacts</span><span class="o">=</span><span class="n">artifacts</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;predicted_tag&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">tag</span> <span class="o">==</span> <span class="n">predicted_tag</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/AymSa/mlops-tweet-finance" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme_extra.js" defer></script>
+    <script src="../../../js/theme.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
