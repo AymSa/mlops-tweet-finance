@@ -16,21 +16,12 @@ def get_idx_tag(path_file: str) -> Dict:
     Return a dictionnary composed of indices and tags
 
     Args :
-        path_file (str) : location of file containing tags
-
-    Returns:
-        None
+        path_file (str) : location of json file containing tags
     """
-    dict_tags = dict()
-    with open(path_file, "r") as f:
-        lines = f.readlines()
-        for line in lines:
-            if line != "\n":
-                key_value = line.split(":")
-                key = int(key_value[0].split("_")[-1][:-1])
-                value = line.split(":")[1].replace("\n", "")
-                dict_tags[key] = value.replace('"', "")[1:]
-    return dict_tags
+    with open(path_file) as fp:
+        dict_tags = json.load(fp)
+
+    return {int(key.split("_")[-1]): val for key, val in dict_tags.items()}
 
 
 def idx_to_tag(serie, dict_tags):
@@ -250,7 +241,7 @@ class LabelEncoder:
         Returns:
             LabelEncoder instance.
         """
-        with open(file_path, "r") as f:
+        with open(file_path) as f:
             kwargs = json.load(fp=f)
         return cls(**kwargs)
 

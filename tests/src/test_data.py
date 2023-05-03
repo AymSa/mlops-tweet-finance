@@ -1,3 +1,4 @@
+import json
 import tempfile
 from pathlib import Path
 from typing import List
@@ -35,9 +36,8 @@ def df():
 
 def test_get_idx_tag():
     with tempfile.TemporaryDirectory() as dp:
-        fp = Path(dp, "tags.txt")
-        open(fp, "w").writelines('"LABEL_0": "Tag 0"')
-
+        fp = Path(dp, "tags.json")
+        json.dump({"LABEL_0": "Tag 0"}, open(fp, "w"))
         dict_tags = data.get_idx_tag(fp)
 
     assert dict_tags == {0: "Tag 0"}

@@ -72,5 +72,5 @@ test:
 
 .PHONY : dvc
 dvc:
-	dvc add data/tweets.csv data/labeled_tweets.csv data/tags.txt
+	dvc add data/tweets.csv data/labeled_tweets.csv data/tags.json
 	dvc push

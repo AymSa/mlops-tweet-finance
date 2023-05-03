@@ -24,20 +24,19 @@ def elt_data():
     """
     Extract, load and transform our data assets.
     """
+    # Save raw data locally
+    shutil.copyfile(config.TAGS_PATH, Path(config.DATA_DIR, "tags.json"))
+    shutil.copyfile(config.TWEETS_PATH, Path(config.DATA_DIR, "tweets.csv"))
+
     # Extract + Load
     tweets = pd.read_csv(config.TWEETS_PATH)
 
-    # Save raw data
-    tweets.to_csv(Path(config.DATA_DIR, "tweets.csv"), index=False)
-    shutil.copyfile(config.TAGS_PATH, Path(config.DATA_DIR, "tags.txt"))
-
     # Transform
-    df = tweets.copy()
-    dict_tags = data.get_idx_tag(Path(config.DATA_DIR, "tags.txt"))
-    df.label = data.idx_to_tag(df.label, dict_tags)
+    dict_tags = data.get_idx_tag(Path(config.DATA_DIR, "tags.json"))
+    tweets.label = data.idx_to_tag(tweets.label, dict_tags)
 
-    df = df[df.label.notnull()]  # drop rows w/ no tag
-    df.to_csv(Path(config.DATA_DIR, "labeled_tweets.csv"), index=False)
+    tweets = tweets[tweets.label.notnull()]  # drop rows w/ no tag
+    tweets.to_csv(Path(config.DATA_DIR, "labeled_tweets.csv"), index=False)
 
     config.logger.info("ELT ✅")
 
