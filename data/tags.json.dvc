@@ -1,0 +1,4 @@
+outs:
+- md5: 4ab6a0914c3f5a055666b70537986612
+  size: 610
+  path: tags.json

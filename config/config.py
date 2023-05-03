@@ -32,7 +32,7 @@ mlflow.set_tracking_uri("file://" + str(MODEL_REGISTRY.absolute()))
 
 # Assets
 TWEETS_PATH = "../datasets/twitter-finance/raw_tweets.csv"
-TAGS_PATH = "../datasets/twitter-finance/tags.txt"
+TAGS_PATH = "../datasets/twitter-finance/tags.json"
 
 # Extra
 STOPWORDS = stopwords.words("english")
